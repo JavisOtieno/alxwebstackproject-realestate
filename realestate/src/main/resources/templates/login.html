@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/login.css}">
+    <script th:src="@{/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/bootstrap.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" th:action="@{/execlogin}" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" class="form-control" placeholder="Email address" id="j_username" name="j_username" />
+        <input type="password" class="form-control" placeholder="Password" id="j_password" name="j_password"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+
+</div>
+
+</body>
+</html>

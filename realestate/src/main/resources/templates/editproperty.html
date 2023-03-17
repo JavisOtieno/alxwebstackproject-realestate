@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/landing.css}">
+    <script th:src="@{/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/bootstrap.min.js}"></script>
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
+    <div class="border-end bg-white" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-light">Real Estate</div>
+        <div class="list-group list-group-flush">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/landing-page-2">PropertyList</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/add-property-2">Add Property</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/property-types-2">Property Types</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/property-use-2">Property Use</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/add-property-type-2">Add Property Type</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/add-property-use-2">Add Property Use</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/communications-2">Communications</a>
+        </div>
+    </div>
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <div class="container-fluid">
+                <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                        <li class="nav-item active"><a class="nav-link" href="#!">Javis Otieno</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Log out</a></li>
+                        <!--<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#!">Action</a>
+                                <a class="dropdown-item" href="#!">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#!">Something else here</a>
+                            </div>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page content-->
+        <div class="container-fluid">
+            <form style="margin-left:20%;margin-right:20%;" th:action="@{/updateproperty}" method="post" >
+
+                <!--<div class="form-group">
+                    <label for="id">ID</label>
+                    <input type="number" class="form-control" id="id" name="id" placeholder="id">
+                </div>-->
+                <input type="text" class="form-control" id="id" name="id" placeholder="Enter id" hidden th:value="${data.id}">
+
+
+                <div class="form-group">
+                    <label for="propertyname">Property Name</label>
+                    <input type="text" class="form-control" id="propertyname" name="propertyname" placeholder="Enter property name" th:value="${data.propertyname}">
+                </div>
+                <div class="form-group">
+                    <label for="propertytype">Property Type</label>
+                    <select class="form-control" id="propertytype" name="propertytype" th:field="*{data.propertytype}">
+                        <option th:each="type : ${datapropertytypes}"
+                                th:value="${type.propertytype}"
+                                th:text="${type.propertytype}"></option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="propertyuse">Property Use</label>
+                    <select class="form-control" id="propertyuse" name="propertyuse" th:field="*{data.propertyuse}">
+                        <option th:each="type2 : ${datapropertyuse}"
+                                th:value="${type2.propertyuse}"
+                                th:text="${type2.propertyuse}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="businesstype">Business Type</label>
+                    <!--<select class="form-control" id="businesstype" name="businesstype">
+                        <option>Rent</option>
+                        <option>Sale</option>
+                    </select>-->
+                    <input th:field="*{data.businesstype}" th:value="Rent" type="radio" id="businesstype" name="businesstype" class="form-check"/>Rent<br />
+                    <input th:field="*{data.businesstype}" th:value="Sale" type="radio" name="businesstype" class="form-check" />Sale
+                </div>
+                <div class="form-group">
+                    <label for="cost">Cost</label>
+                    <input type="text" class="form-control" id="cost" name="cost" placeholder="Cost" th:value="${data.cost}">
+                </div>
+                    <input type="hidden" class="form-control" id="location" name="location" placeholder="location" th:value="${data.location}">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <button type="button" class="btn btn-primary" onclick="showMap()" >
+                        Map
+                    </button>
+                </div>
+                <div id="map" style="height:300px;width:720px;"></div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status" th:value="${data.status}">
+                        <option>Available</option>
+                        <option>Taken</option>
+                    </select>
+                </div>
+                <!--<div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>-->
+                <button type="submit" class="btn btn-primary" style="margin-top:20px;">Save Details</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="scripts.js"></script>
+<script type="text/javascript">
+    function showMap(){
+        var x = document.getElementById("map");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+
+    }
+    let map;
+    let mymarker;
+
+    function initMap(){
+        var mapdivelement = document.getElementById("map");
+        var mapproperties =  { center: { lat: -1.330235, lng: 36.86306}, zoom: 10,};
+        var numberofmarkers = 0;
+        map = new google.maps.Map(mapdivelement, mapproperties);
+        map.addListener("click", (e) => {
+            functionForPlacingMarker(e.latLng, map);
+        });
+        function functionForPlacingMarker(latlng) {
+            numberofmarkers=numberofmarkers+1;
+            if(numberofmarkers>1) {
+                try {
+                    mymarker.setMap(null);
+                } catch (ex) {
+                    console.log(ex.message);
+                }
+            }
+            //  alert("ADDING MARKER FROM CLICK EVENT");
+            mymarker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: "This is where we have dropped the pin",
+            });
+            map.panTo(latlng);
+            $("#location").val(JSON.stringify(latlng));
+
+        }
+        var mylatlng=$("#location").val();
+        var mylatlngjson=JSON.parse(mylatlng);
+
+        mymarker = new google.maps.Marker({
+            position: mylatlngjson,
+            map: map,
+            title: "This is where the editable location is",
+        });
+
+        //alert($("#location").val());
+    }
+    window.initMap = initMap;
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVC3jRqCdQVeVakGLSDHrEHtMZSv_R_XU&callback=initMap&v=weekly"
+        defer>
+</script>
+
+</body>
+</html>

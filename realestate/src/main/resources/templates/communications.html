@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/landing.css}">
+    <script th:src="@{/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/bootstrap.min.js}"></script>
+    <script th:src="@{/landing.js}"></script>
+</head>
+<body>
+<!--Main Navigation-->
+<header>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+        <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-4">
+                <a href="/dashboard" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                    <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Property List</span>
+                </a>
+                <!--<a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
+                </a>-->
+                <a href="/add-property" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-lock fa-fw me-3"></i><span>Add Property</span></a>
+                <a href="/property-types" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-chart-line fa-fw me-3"></i><span>Property Types</span></a>
+                <a href="/property-use" class="list-group-item list-group-item-action py-2 ripple">
+                    <i class="fas fa-chart-pie fa-fw me-3"></i><span>Property use</span>
+                </a>
+                <a href="/add-property-type" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-chart-bar fa-fw me-3"></i><span>Add Property Type</span></a>
+                <a href="/add-property-use" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-globe fa-fw me-3"></i><span>Add Property Use</span></a>
+                <a href="/communications" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-building fa-fw me-3"></i><span>Communications</span></a>
+                <!--<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                        class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>-->
+            </div>
+        </div>
+    </nav>
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+            <!-- Toggle button -->
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+                    aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">
+                <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
+                     loading="lazy" />
+            </a>
+            <!-- Search form -->
+            <!--<form class="d-none d-md-flex input-group w-auto my-auto">
+                <input autocomplete="off" type="search" class="form-control rounded"
+                       placeholder='Search (ctrl + "/" to focus)' style="min-width: 225px;" />
+                <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
+            </form>-->
+
+            <!-- Right links -->
+            <ul class="navbar-nav ms-auto d-flex flex-row">
+                <li class="nav-item"><a class="" href="#">Javis Otieno</a></li>
+                <li class="nav-item" style="margin-left:20px"><a class="" href="#">Logout</a></li>
+                </li>
+            </ul>
+
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 58px;">
+    <div class="container pt-4">
+
+        <table class="table table-hover" id="loadTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date Created</th>
+                <th>Username</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Mode</th>
+                <th>Mobile Number</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <!--// FINDALL() METHOD<tr th:each="document: ${data}">-->
+                <td>test-fill</td>
+                <td>test-fill</td>
+                <td>test-fill</td>
+                <td>test-fill</td>
+                <td>test-fill</td>
+                <td>test-fill</td>
+                <td>test-fill</td>
+                <td>test-fill</td>
+                <td>test-fill</td>
+
+
+
+
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<!--Main layout-->
+
+</body>
+</html>

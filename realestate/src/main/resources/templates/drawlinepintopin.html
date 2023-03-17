@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/landing.css}">
+  <script th:src="@{/jquery-3.6.0.min.js}"></script>
+  <script th:src="@{/bootstrap.min.js}"></script>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar-->
+  <div class="border-end bg-white" id="sidebar-wrapper">
+    <div class="sidebar-heading border-bottom bg-light">Real Estate</div>
+    <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/landing-page-2">PropertyList</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/add-property-2">Add Property</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/property-types-2">Property Types</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/property-use-2">Property Use</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/add-property-type-2">Add Property Type</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/add-property-use-2">Add Property Use</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/communications-2">Communications</a>
+    </div>
+  </div>
+  <!-- Page content wrapper-->
+  <div id="page-content-wrapper">
+    <!-- Top navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <div class="container-fluid">
+        <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+            <li class="nav-item active"><a class="nav-link" href="#!">Javis Otieno</a></li>
+            <li class="nav-item"><a class="nav-link" href="#!">Log out</a></li>
+            <!--<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#!">Action</a>
+                    <a class="dropdown-item" href="#!">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#!">Something else here</a>
+                </div>
+            </li>-->
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Page content-->
+    <div class="container-fluid">
+      <form style="margin-left:20%;margin-right:20%;" th:action="@{/updateproperty}" method="post" >
+
+        <!--<div class="form-group">
+            <label for="id">ID</label>
+            <input type="number" class="form-control" id="id" name="id" placeholder="id">
+        </div>-->
+
+
+
+
+
+
+
+        <input type="hidden" class="form-control" id="location" name="location" placeholder="location" >
+        <div class="form-group">
+          <label for="location">Location</label>
+          <button type="button" class="btn btn-primary" onclick="showMap()" >
+            Map
+          </button>
+        </div>
+        <div id="map" style="height:300px;width:720px;"></div>
+
+        <button type="button" id="OKButton" class="btn btn-primary" style="margin-top:20px;">OK</button>
+
+        <button type="button" id="ResetButton" class="btn btn-primary" style="margin-top:20px;">Reload</button>
+
+
+        <!--<div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>-->
+
+        <!--<button type="submit" class="btn btn-primary" style="margin-top:20px;">Save Details</button>-->
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="scripts.js"></script>
+<script type="text/javascript">
+  function showMap(){
+    var x = document.getElementById("map");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+
+  }
+  let map;
+  let mymarker;
+  let mymarker2;
+  var firstmarkerposition;
+  var secondmarkerposition;
+
+  function initMap(){
+    var mapdivelement = document.getElementById("map");
+    var mapproperties =  { center: { lat: -1.330235, lng: 36.86306}, zoom: 10,};
+    var numberofmarkers = 0;
+    map = new google.maps.Map(mapdivelement, mapproperties);
+    directionsService = new google.maps.DirectionsService;
+    directionsDisplay = new google.maps.DirectionsRenderer({
+              map: map
+            });
+
+    map.addListener("click", (e) => {
+      functionForPlacingMarker(e.latLng, map);
+    });
+    function functionForPlacingMarker(latlng) {
+
+        /*try {
+          mymarker.setMap(null);
+        } catch (ex) {
+          console.log(ex.message);
+        }
+
+         */
+
+      //  alert("ADDING MARKER FROM CLICK EVENT");
+      if(numberofmarkers==0) {
+        mymarker = new google.maps.Marker({
+          position: latlng,
+          map: map,
+          title: "This is where we have dropped the first pin",
+        });
+        firstmarkerposition=latlng;
+
+      }else if(numberofmarkers==1){
+        mymarker2 = new google.maps.Marker({
+          position: latlng,
+          map: map,
+          title: "This is where we have dropped the second pin",
+        });
+        secondmarkerposition=latlng;
+
+      }else{
+        alert('press ok to draw line. reset to reset map.');
+      }
+
+
+      map.panTo(latlng);
+
+      google.maps.event.addDomListener(document.getElementById('OKButton'), 'click', function () {
+        //map.setCenter(new google.maps.LatLng(10.23,123.45));
+        mymarker.setMap(null);
+        mymarker2.setMap(null);
+        calculateAndDisplayRoute(directionsService,directionsDisplay,firstmarkerposition,secondmarkerposition);
+      });
+
+      google.maps.event.addDomListener(document.getElementById('ResetButton'), 'click', function () {
+        //map.setCenter(new google.maps.LatLng(10.23,123.45));
+        location.reload();
+      });
+
+
+      //$("#location").val(JSON.stringify(latlng));
+
+      numberofmarkers=numberofmarkers+1;
+
+    }
+    var mylatlng=$("#location").val();
+    var mylatlngjson=JSON.parse(mylatlng);
+
+    /*mymarker = new google.maps.Marker({
+      position: mylatlngjson,
+      map: map,
+      title: "This is where the editable location is",
+    });
+    */
+    function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
+
+      directionsService.route({
+        origin: pointA,
+        destination: pointB,
+        avoidTolls: true,
+        avoidHighways: false,
+        travelMode: google.maps.TravelMode.DRIVING
+      }, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+    }
+
+    //alert($("#location").val());
+  }
+  window.initMap = initMap;
+
+
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVC3jRqCdQVeVakGLSDHrEHtMZSv_R_XU&callback=initMap&v=weekly"
+        defer>
+</script>
+
+</body>
+</html>
